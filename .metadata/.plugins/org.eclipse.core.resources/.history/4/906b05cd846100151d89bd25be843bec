@@ -1,0 +1,57 @@
+package net.silvertigerentertainment.GVSM.Main;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+
+
+public class Game extends JFrame{
+	
+	public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	public Game(){
+		setUndecorated(true);
+		setSize(size);
+		setTitle("FightingGame");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		init();
+		
+	}
+	Screen screen = new Screen();
+	
+	GraphicsDevice otherScreen = getOtherScreen(this);
+	JFrame frameOnOtherScreen = new JFrame(otherScreen.getDefaultConfiguration());
+
+	private GraphicsDevice getOtherScreen(Component component) {
+	    GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	    if (graphicsEnvironment.getScreenDevices().length == 1) {
+	        // if there is only one screen, return that one
+	        return graphicsEnvironment.getScreenDevices()[0];
+	    }
+
+	    GraphicsDevice theWrongOne = component.getGraphicsConfiguration().getDevice();
+	    for (GraphicsDevice dev : graphicsEnvironment.getScreenDevices()) {
+	        if (dev != theWrongOne) {
+	            return dev;
+	        }
+	    }
+
+	    return null;
+	}
+	
+	public void init(){
+		add(screen);
+		addKeyListener(new Listener());
+		setFocusable(true);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		Game game = new Game();
+	}
+	
+}

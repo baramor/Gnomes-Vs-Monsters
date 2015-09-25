@@ -1,0 +1,58 @@
+package net.silvertigerentertainment.GVSM.Main;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+
+
+public class Game extends JFrame{
+	
+	public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	public Game(){
+		setUndecorated(true);
+		setSize(size);
+		setTitle("FightingGame");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GraphicsEnvironment ge = GraphicsEnvironment.
+				   getLocalGraphicsEnvironment();
+				   GraphicsDevice[] gs = ge.getScreenDevices();
+				   for (int j = 0; j < gs.length; j++) { 
+				      GraphicsDevice gd = gs[j];
+				      GraphicsConfiguration[] gc =
+				        gd.getConfigurations();
+				      for (int i=0; i < gc.length; i++) {
+				         Canvas c = new Canvas(gc[i]); 
+				         Rectangle gcBounds = gc[i].getBounds();
+				         int xoffs = gcBounds.x;
+				         int yoffs = gcBounds.y;
+				           getContentPane().add(c);
+				           setLocation((i*50)+xoffs, (i*60)+yoffs);
+				         show();
+				      }
+				}
+		//setLocationRelativeTo(null);
+	
+		
+		init();
+		
+	}
+	Screen screen = new Screen();
+	
+	public void init(){
+		add(screen);
+		addKeyListener(new Listener());
+		setFocusable(true);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		Game game = new Game();
+	}
+	
+}

@@ -1,0 +1,41 @@
+package net.silvertigerentertainment.GVSM.Main;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+
+
+public class Game extends JFrame{
+	
+	public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	public Game(){
+	//	setUndecorated(true);
+		setSize(size);
+		setTitle("FightingGame");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+	
+		
+		init();
+		
+	}
+	Screen screen = new Screen();
+	
+	public void init(){
+		add(screen);
+		addKeyListener(new Listener());
+		setFocusable(true);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		Game game = new Game();
+	}
+	
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.awt.Graphics"/>
+<fullyQualifiedTypeName name="java.awt.Toolkit"/>
+<fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="java.awt.event.KeyListener"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Stats.StatType"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Levels.Level"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Levels.MapLoader"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Helpers.Animation"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Entitys.Player"/>
+<fullyQualifiedTypeName name="java.awt.Graphics2D"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Entitys.Players"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Helpers.ScreenShot"/>
+<fullyQualifiedTypeName name="java.text.DateFormat"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.awt.GraphicsConfiguration"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="java.awt.image.AffineTransformOp"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Helpers.ImageSprite"/>
+<fullyQualifiedTypeName name="net.silvertigerentertainment.GVSM.Main.Screen"/>
+<fullyQualifiedTypeName name="java.awt.Transparency"/>
+<fullyQualifiedTypeName name="java.awt.Component"/>
+</qualifiedTypeNameHistroy>
