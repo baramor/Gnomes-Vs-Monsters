@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="38" height="24" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="dungeon_tileset" tilewidth="16" tileheight="16">
+  <image source="../dungeon_tileset.png" width="128" height="128"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="38" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2UbQuDMAyEM2oHk1Zw2xed//93roPJSjizVuNwkIMH+nb1jBIik8lkktUIe65yrKmw071IUg24IlhbWwOngJRrbaZTBp8vgXw815Y61WT5ltGRbr0u9Hk3D8602dizM9z/yqX17/cLeVAuLs/8kfRq1gt718QtcS/0/yrXmHgkpkL/nEvjW0q5av2R9Go2gLWSXjqfyf15rvAG3dUJz9vaH1C/iIBwAFAu4/84H5QnhuMuGEAOAAA=
+  </data>
+ </layer>
+</map>
