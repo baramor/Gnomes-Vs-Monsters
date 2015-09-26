@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/Client/src/net/silvertigerentertainment/GVSM/Main/Game.java"/>
+<listEntry value="/Client/src/net/silvertigerentertainment/GVSM/Main/Frame.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -10,6 +10,6 @@
 <mapEntry key="[debug]" value="org.eclipse.jdt.launching.localJavaApplication"/>
 <mapEntry key="[run]" value="org.eclipse.jdt.launching.localJavaApplication"/>
 </mapAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="net.silvertigerentertainment.GVSM.Main.Game"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="net.silvertigerentertainment.GVSM.Main.Frame"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Client"/>
 </launchConfiguration>

@@ -1,41 +1,51 @@
 package net.silvertigerentertainment.GVSM.Main;
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 
-import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.io.File;
 
+import net.silvertigerentertainment.GVSM.Entitys.Player;
+import net.silvertigerentertainment.GVSM.Entitys.Players;
+import net.silvertigerentertainment.GVSM.Helpers.Camera;
+import net.silvertigerentertainment.GVSM.Levels.Level;
+import net.silvertigerentertainment.GVSM.Levels.MapLoader;
+import net.silvertigerentertainment.GVSM.Levels.Potionhut;
 
-public class Game extends JFrame{
+public class Game extends GameState {
 	
-	public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+	public static Players players;
+
+	public static Camera camera;
+	public static Player player;
+	public static Level level;
+	public static MapLoader loader;
+	public Potionhut hut;
 	
-	public Game(){
-	//	setUndecorated(true);
-		setSize(size);
-		setTitle("FightingGame");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 	
+	public Game() {
+		super(1);
+		camera = new Camera();
+		level = new Level();
+		loader = new MapLoader();
+		loader.loadLevel(new File("res/Maps/town.map"), "Tilesets/dungeon_tileset", 64, 24);
+		players = new Players();
+		player = new Player(players.firegnome);
+		hut = new Potionhut();
+	}
+	
+	public void tick() {
+		player.tick();
+		camera.tick();
+	}
+	
+	public void render(Graphics2D g) {
+		g.setColor(new Color(7,173,227));
+		g.fillRect(0, 0, Screen.WIDTH,Screen.HEIGHT);
 		
-		init();
+		level.render(g);
+		hut.render(g);
+		player.render(g);
 		
 	}
-	Screen screen = new Screen();
-	
-	public void init(){
-		add(screen);
-		addKeyListener(new Listener());
-		setFocusable(true);
-		setVisible(true);
-	}
-	
-	public static void main(String args[]) {
-		Game game = new Game();
-	}
-	
+
 }

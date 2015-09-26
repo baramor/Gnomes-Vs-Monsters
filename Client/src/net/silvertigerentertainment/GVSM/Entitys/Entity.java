@@ -1,5 +1,6 @@
 package net.silvertigerentertainment.GVSM.Entitys;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -9,16 +10,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import net.silvertigerentertainment.GVSM.Helpers.Animation;
+import net.silvertigerentertainment.GVSM.Helpers.Camera;
+import net.silvertigerentertainment.GVSM.Main.Game;
 import net.silvertigerentertainment.GVSM.Main.Screen;
 
 public class Entity {
 
 	public int jumpTime, jumpTimer = 30;
 
-	public int hasCollided = 0;
 	public boolean isFalling = true;
 
 	public BufferedImage animationTileset;
+
 	public Animation walk;
 	public Animation stand;
 
@@ -27,22 +30,19 @@ public class Entity {
 	public float speed;
 	public int x, y;
 	public boolean isLeft, isRight, isJump, isGrounded;
-	public String textureName;
 
 	public boolean jumpPressed;
-	public boolean isWalking, isJumping, isRunning, isAttacking,
-			isStanding = true;
+	public boolean isWalking, isJumping, isRunning, isStanding = true;
 
-	public int width = 96, height = 128;
+	public int width = 48 * (int)Game.camera.SCALE, height = 64 * (int)Game.camera.SCALE;
 
 	public Entity() {
-		int mydir = x - Screen.WIDTH / 2;
-		Screen.sX += mydir;
-		this.x = Screen.WIDTH / 2 - 8;
+		int myposX = Screen.getX(500);
+		Game.camera.sY = Screen.getY(500);
+		this.x = myposX;
 	}
 
 	public void render(Graphics2D g) {
-		
 		if (isWalking) {
 			walk.render(g);
 		} else {
@@ -51,8 +51,9 @@ public class Entity {
 	}
 
 	public void tick() {
+	
 		stand.update(x, y, 10);
-		walk.update(x, y,10);
+		walk.update(x, y, 10);
 
 		// Movement Code Here
 
@@ -60,35 +61,15 @@ public class Entity {
 			y += 3;
 		}
 
-		for (int x = 0; x < Screen.level.block.length; x++) {
-			for (int y = 0; y < Screen.level.block[0].length; y++) {
-				if (getBounds()
-						.intersects(Screen.level.block[x][y].getBounds())) {
-					if (Screen.level.block[x][y].id == 12) {
-						isGrounded = true;
+		for (int x = 0; x < Game.level.block.length; x++) {
+			for (int y = 0; y < Game.level.block[0].length; y++) {
+				if (getBounds().intersects(Game.level.block[x][y].collisionBounds())) {
+					if (Game.level.block[x][y].id != 0) {
+						isFalling = false;
 					}
 				}
 			}
 		}
-
-		if (isFalling) {
-			for (int x = 0; x < Screen.level.block.length; x++) {
-				for (int y = 0; y < Screen.level.block[0].length; y++) {
-					if (getBounds().intersects(
-							Screen.level.block[x][y].getBounds())) {
-						if (Screen.level.block[x][y].id != 0) {
-							if (isGrounded) {
-								isFalling = false;
-							}
-						} else {
-							isFalling = true;
-						}
-					}
-				}
-			}
-		}
-
-		double speed = 150.5;
 
 		if (jumpPressed) {
 
@@ -98,7 +79,6 @@ public class Entity {
 					isJump = false;
 					jumpTime = 0;
 				} else {
-					// isJump = false;
 					isGrounded = false;
 					y -= 4.8;
 					jumpTime += 1;
@@ -110,16 +90,12 @@ public class Entity {
 			isFalling = true;
 			isJump = false;
 			jumpTime = 0;
-
 		}
 
 		if (isRight) {
-			// x += 1;
-			Screen.sX += speed;
-		}
-
-		if (isLeft) {
-			Screen.sX -= speed;
+			Game.camera.sX += speed;
+		}else if (isLeft) {
+			Game.camera.sX -= speed;
 		}
 	}
 
@@ -150,29 +126,25 @@ public class Entity {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	
+
 	public void setAirTime(int airTime) {
 		this.jumpTimer = airTime;
-	}
-
-	public String getTextureName() {
-		return textureName;
 	}
 
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height - 30);
 	}
-	
+
 	public void setAnimationTileset(String path) {
 		try {
 			BufferedImage animationTileset;
-			animationTileset = ImageIO.read(new File("res/" + path + ".png"));
+			animationTileset = ImageIO.read(new File("res/Tilesets/" + path + ".png"));
 			this.animationTileset = animationTileset;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setTexture(String path) {
 		try {
 			BufferedImage texture;
@@ -186,15 +158,14 @@ public class Entity {
 	public void setWalkAnimation(Animation walk) {
 		this.walk = walk;
 	}
-	
+
 	public void setStandAnimation(Animation stand) {
 		this.stand = stand;
 	}
-	
-	
-	
-	
-	
-	
+
+	public Rectangle startBlock() {
+		return new Rectangle(850, 1013, 64, 64);
+
+	}
 
 }

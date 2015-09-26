@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 import net.silvertigerentertainment.GVSM.Main.Screen;
 
 public class Level {
-	public int worldWidth = 32;
-	public int worldHeight = 16;
+	public int worldWidth = 64;
+	public int worldHeight = 24;
 	public static int blockSize = 64;
 
 	public static BufferedImage tileset;

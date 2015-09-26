@@ -1,96 +1,110 @@
 package net.silvertigerentertainment.GVSM.Main;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.LookupOp;
-import java.awt.image.LookupTable;
-import java.io.File;
+import java.awt.event.*;
 
 import javax.swing.JPanel;
 
-import net.silvertigerentertainment.GVSM.Entitys.Player;
-import net.silvertigerentertainment.GVSM.Entitys.Players;
-import net.silvertigerentertainment.GVSM.Levels.Level;
-import net.silvertigerentertainment.GVSM.Levels.MapLoader;
-
+@SuppressWarnings("serial")
 public class Screen extends JPanel implements Runnable {
-	public static BufferedImage backbuffer;
-	public static final int WIDTH = Game.size.width, HEIGHT = Game.size.height;
-	public static boolean gamePaused = false;
 
-	public Thread thread;
+	// dimensions
+	public static final int WIDTH = Frame.size.width;
+	public static final int HEIGHT = Frame.size.height;
+	public static boolean gamePaused;
 
-	public static double sX = 0, sY = 0;
+	// game thread
+	private static Thread thread;
+	public static boolean running = false;
+	private int FPS = 60;
+	private long targetTime = 1000 / FPS;
 
-	public Players players;
+	// image
+	public static BufferedImage image;
+	private Graphics2D g;
 
-	public static Player player;
-	public static Level level;
-	public MapLoader loader;
-
-	public static Graphics2D g2d;
-
-	AffineTransform identity = new AffineTransform();
-
-	public AffineTransform trans = new AffineTransform();
+	// game state manager
+	private GameStateManager gsm;
 
 	public Screen() {
-		define();
-		thread = new Thread(this);
-		thread.start();
+		super();
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setFocusable(true);
+		requestFocus();
 	}
 
-	public void define() {
-		backbuffer = new BufferedImage(WIDTH, HEIGHT,
-				BufferedImage.TYPE_INT_ARGB);
-		g2d = backbuffer.createGraphics();
-		players = new Players();
-		level = new Level();
-		player = new Player(players.firegnome);
-
-		loader = new MapLoader();
-		loader.loadLevel(new File("maps/test.map"), "dungeon_tileset", 32, 16);
+	public void addNotify() {
+		super.addNotify();
+		if (thread == null) {
+			thread = new Thread(this);
+			addKeyListener(new Listener());
+			thread.start();
+		}
 	}
 
-	public void tick() {
-		player.tick();
+	public static int getX(int x) {
+		return WIDTH / 800 * x;
 	}
 
-	public void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		g.clearRect(0, 0, WIDTH, HEIGHT);
-		render(g2d);
-		g2.drawImage(backbuffer, 0, 0, this);
+	public static int getY(int y) {
+		return HEIGHT / 800 * y;
 	}
 
-	public void render(Graphics2D g) {
-		g2d.setColor(new Color(87, 176, 249));
-		g2d.fillRect(0, 0, WIDTH * (level.worldWidth * 64), HEIGHT
-				* (level.worldHeight * 64));
-		// Render the game
-		player.render(g);
-		level.render(g);
+	private void init() {
+
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		g = (Graphics2D) image.getGraphics();
+
+		//running = true;
+
+		gsm = new GameStateManager();
 
 	}
 
 	public void run() {
-		while (gamePaused == false) {
+		init();
+
+		long start;
+		long elapsed;
+		long wait;
+
+		// game loop
+		while (running == false) {
+
+			start = System.nanoTime();
+
+			update();
+			draw();
+			drawToScreen();
+			elapsed = System.nanoTime() - start;
+
+			wait = targetTime - elapsed / 1000000;
+			if (wait < 0)
+				wait = 5;
+
 			try {
-				Thread.sleep(10);
+				Thread.sleep(wait);
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			tick();
-			repaint();
 
 		}
 	}
-	
-	
+
+	private void update() {
+		gsm.tick();
+	}
+
+	private void draw() {
+		gsm.render(g);
+	}
+
+	private void drawToScreen() {
+		Graphics g2 = getGraphics();
+		g2.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
+
+		g2.dispose();
+	}
+
 }

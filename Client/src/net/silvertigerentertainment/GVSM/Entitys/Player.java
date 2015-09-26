@@ -23,14 +23,14 @@ public class Player {
 
 	public Sword sword;
 	public Entity player;
-	
+
 	public Player(Entity player) {
 		this.player = player;
-		sword = new Sword(player.x,player.y);
+		sword = new Sword();
 	}
-	
-	public void keyPressed(KeyEvent e){
-		switch(e.getKeyCode()) {
+
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
 		case KeyEvent.VK_RIGHT:
 			player.isWalking = true;
 			player.isRight = true;
@@ -41,15 +41,20 @@ public class Player {
 			break;
 		case KeyEvent.VK_UP:
 			player.jumpPressed = true;
-			if(!player.isJump) {
+			if (!player.isJump) {
 				player.isJump = true;
 			}
 			break;
+
+		case KeyEvent.VK_NUMPAD1:
+			sword.callRepeat = true;
+			break;
+
 		}
 	}
-	
+
 	public void keyReleased(KeyEvent e) {
-		switch(e.getKeyCode()) {
+		switch (e.getKeyCode()) {
 		case KeyEvent.VK_RIGHT:
 			player.isWalking = false;
 			player.isRight = false;
@@ -61,14 +66,17 @@ public class Player {
 		case KeyEvent.VK_UP:
 			player.jumpPressed = false;
 			break;
+		case KeyEvent.VK_NUMPAD1:
+			sword.callRepeat = false;
+			break;
 		}
 	}
-	
-	public void render(Graphics2D g){
+
+	public void render(Graphics2D g) {
 		player.render(g);
 		sword.render(g);
 	}
-	
+
 	public void tick() {
 		player.tick();
 		sword.tick();

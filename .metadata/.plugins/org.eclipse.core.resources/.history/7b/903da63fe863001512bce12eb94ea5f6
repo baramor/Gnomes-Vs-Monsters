@@ -1,0 +1,25 @@
+package net.silvertigerentertainment.GVSM.Entitys;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import net.silvertigerentertainment.GVSM.Helpers.Animation;
+import net.silvertigerentertainment.GVSM.Main.Screen;
+
+public class FireGnome extends Entity {
+	
+	public FireGnome() {
+		setTexture("Characters/fire_gnome_standing");
+		setAnimationTileset("Tilesets/fire_gnome_tileset");
+		
+		setSpeed(250.5f);
+		
+		
+		walk = new Animation(animationTileset, this.x,y,8, width, height,48,64,0,7);
+		stand = new Animation(animationTileset, this.x,y,9, width, height,48,64,8,0);
+		setWalkAnimation(walk);
+		setStandAnimation(stand);
+	}
+
+}

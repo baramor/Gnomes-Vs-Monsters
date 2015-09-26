@@ -12,29 +12,25 @@ import javax.imageio.ImageIO;
 import net.silvertigerentertainment.GVSM.Main.Screen;
 
 public class ScreenShot {
-	
-	public static void takeScreenShoot(){
+
+	public static void takeScreenShoot() {
 		try {
-			if(Screen.gamePaused == true){
-				ImageIO.write(Screen.backbuffer, "PNG",new File("res/ScreenShots/screenshot.png"));
-			}else {
-				//lastId+=1;
-				Screen.gamePaused = false;
-				ImageIO.write(Screen.backbuffer, "PNG",new File("res/ScreenShots/screenshot" + id() + ".png"));
-			}
+			Screen.running = true;
+			ImageIO.write(Screen.image, "PNG", new File("res/ScreenShots/screenshot" + id() + ".png"));
+			Screen.running = false;
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		//return;
+		return;
 	}
-	
+
 	public static Random rand = new Random();
-	
-	public static int id(){
+
+	public static int id() {
 		int id = 0;
-		for(int i = 0; i <= 10000;i+=1) {
+		for (int i = 0; i <= 10000; i += 1) {
 			File f = new File("res/ScreenShots/screenshot" + i + ".png");
-			if(!f.exists()) {
+			if (!f.exists()) {
 				id = i + rand.nextInt(100000);
 			}
 		}
